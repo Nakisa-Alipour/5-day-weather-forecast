@@ -1,0 +1,20 @@
+:root {
+    --primary: rgb(15, 15, 94);
+    --secondary: rgb(53, 53, 135);
+    --tertiary: #9d9de6;
+    --primary-text: white;
+    --secondary-text: rgb(89, 151, 231); 
+    --border-radius: .3rem;
+  }
+
+
+.title {
+    background-color: var(--primary);
+    color: var(--primary-text);
+    border-radius: 0.5rem;
+    padding: 1rem 1rem;
+}
+
+.body-feature {
+    background-color: var(--secondary);
+}
