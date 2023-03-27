@@ -28,3 +28,8 @@
     gap: 20px;
     
 }
+
+#weather-container {
+    border-width: medium;
+    box-shadow: 5px #9d9de6;
+}
