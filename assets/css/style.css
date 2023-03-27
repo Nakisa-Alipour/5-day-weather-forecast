@@ -18,3 +18,13 @@
 .body-feature {
     background-color: var(--secondary);
 }
+
+#weather-summary {
+    color: var(--secondary-text);
+    padding: 20px 0;
+    font-size: medium;
+    font-style: italic;
+    display: flex;
+    gap: 20px;
+    
+}

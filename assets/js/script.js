@@ -7,6 +7,7 @@ var weatherSummaryEl = document.querySelector("#weather-summary");
 var weatherContainerEl = document.querySelector("#weather-container");
 
 
+
 // Define variable to store API key
 var APIKey = "a6bc9930ce925bdcad061b78a447a8df"
 var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={a6bc9930ce925bdcad061b78a447a8df}"
@@ -25,6 +26,7 @@ var formSubmitHandler = function (event){
         weatherContainerEl.innerHTML = '';
 
         getWeatherAPI(city);
+        
     } else {
         alert('Please enter the city name');
     }
@@ -49,7 +51,13 @@ var getWeatherAPI = function (cityInfo) {
               console.log(nameOfCity);
               weatherSummaryEl.appendChild(nameOfCity);
 
-              //current Weather info
+              //show the current date
+              var todayEl = document.createElement("h3");
+              todayEl.textContent = dayjs().format("DD/MM/YYYY");
+              console.log(todayEl);
+              weatherSummaryEl.append(todayEl);
+
+              //console.log for current Weather info
               var currentWeather = data.list[0];
               console.log("humidity:",currentWeather.main.humidity);
               console.log("weather:",currentWeather.weather[0].description);
@@ -91,7 +99,7 @@ var getWeatherAPI = function (cityInfo) {
     var todayEl = document.createElement("h3");
     todayEl.textContent = dayjs().format("DD/MM/YYYY");
     console.log(todayEl);
-    WeatherContainerEl.append(todayEl);
+    weatherContainerEl.append(todayEl);
 
     
 
