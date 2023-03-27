@@ -38,8 +38,17 @@ var getWeatherAPI = function (cityInfo) {
             console.log(response);
             response.json().then(function (data) {
               console.log(data);
-              console.log(data.city.coord)
-              //displayWeather info(data, cityInfo);
+              //show the recent city name has been serached
+              var nameOfCity = document.createElement("h3");
+              nameOfCity.textContent = data.city.name;
+              console.log(nameOfCity);
+              weatherSummaryEl.appendChild(nameOfCity);
+              //display current Weather info(data, cityInfo);
+              var currentWeather = data.list[0];
+              console.log("humidity:",currentWeather.main.humidity);
+              console.log("weather:",currentWeather.weather[0].description);
+              console.log("temp:",currentWeather.main.temp);
+
             });
           } else {
             alert('Error: ' + response.statusText);
@@ -48,7 +57,20 @@ var getWeatherAPI = function (cityInfo) {
     .catch(function (error) {
         alert('Unable to connect to OpenWeatherAPI');
     });
+
+    var displaySummary = function() {
+
+    //show the current date
+    var todayEl = document.createElement("h3");
+    todayEl.textContent = dayjs().format("DD/MM/YYYY");
+    console.log(todayEl);
+    WeatherContainerEl.append(todayEl);
+
+    
+
+}
 };
+
 
 
 
