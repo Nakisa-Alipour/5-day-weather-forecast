@@ -1,10 +1,11 @@
 // Define variables to store DOM elements
-var cityNameEl = $("#city-name");
-var cityFormEl = $("#city-form");
-var searchHistoryEl = $("search-history");
-var weatherInfoColumnsEl = $("#weather-info-columns");
-var weatherSummaryEl = $("#weather-summary");
-var fiveDayWeatherContainerEl = $("#5days-weather-container");
+var cityNameEl = document.querySelector("#city-name");
+var cityFormEl = document.querySelector("#city-form");
+var searchHistoryEl = document.querySelector("#search-history");
+var weatherInfoColumnsEl = document.querySelector("#weather-info-columns");
+var weatherSummaryEl = document.querySelector("#weather-summary");
+var WeatherContainerEl = document.querySelector("#weather-container");
+
 
 // Define variable to store API key
 var APIKey = "a6bc9930ce925bdcad061b78a447a8df"
@@ -12,7 +13,7 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lo
 
 
 // Define function to retrieve and display weather information
-var checkEnteredInfo = function (event){
+var formSubmitHandler = function (event){
     event.preventDefault();
     var city = cityNameEl.value.trim();
 
@@ -37,6 +38,7 @@ var getWeatherAPI = function (cityInfo) {
             console.log(response);
             response.json().then(function (data) {
               console.log(data);
+              console.log(data.city.coord)
               //displayWeather info(data, cityInfo);
             });
           } else {
@@ -54,4 +56,4 @@ var getWeatherAPI = function (cityInfo) {
 
 
 
-  cityFormEl.addEventListener('submit', checkEnteredInfo);
+  cityFormEl.addEventListener("submit",formSubmitHandler);
