@@ -12,8 +12,46 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lo
 
 
 // Define function to retrieve and display weather information
-function getWeatherInfo(cityName) 
+var checkEnteredInfo = function (event){
+    event.preventDefault();
+    var city = cityNameEl.value.trim();
+
+    if (city) {
+        getWeatherAPI(city);
+
+        cityNameEl.value = '';
+    } else {
+        alert('Please enter the city name');
+    }
+}
 
 
-// Build URL for weather API
-var queryURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + cityName + "&appid=" + APIKey;
+var getWeatherAPI = function (cityInfo) {
+    // Build URL for weather API
+    var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInfo}&appid=${APIKey}`;
+
+    // Send GET request to weather API
+    fetch(queryURL)
+    .then(function (response) {
+        if (response.ok) {
+            console.log(response);
+            response.json().then(function (data) {
+              console.log(data);
+              //displayWeather info(data, cityInfo);
+            });
+          } else {
+            alert('Error: ' + response.statusText);
+          }
+    })
+    .catch(function (error) {
+        alert('Unable to connect to OpenWeatherAPI');
+    });
+};
+
+
+
+
+
+
+
+  cityFormEl.addEventListener('submit', checkEnteredInfo);
