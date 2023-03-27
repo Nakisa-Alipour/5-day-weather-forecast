@@ -4,7 +4,7 @@ var cityFormEl = document.querySelector("#city-form");
 var searchHistoryEl = document.querySelector("#search-history");
 var weatherInfoColumnsEl = document.querySelector("#weather-info-columns");
 var weatherSummaryEl = document.querySelector("#weather-summary");
-var WeatherContainerEl = document.querySelector("#weather-container");
+var weatherContainerEl = document.querySelector("#weather-container");
 
 
 // Define variable to store API key
@@ -18,9 +18,13 @@ var formSubmitHandler = function (event){
     var city = cityNameEl.value.trim();
 
     if (city) {
-        getWeatherAPI(city);
-
+       
+        // Clear search input area, weather summary and weather container elements after clicking search button
         cityNameEl.value = '';
+        weatherSummaryEl.innerHTML = '';
+        weatherContainerEl.innerHTML = '';
+
+        getWeatherAPI(city);
     } else {
         alert('Please enter the city name');
     }
@@ -38,18 +42,41 @@ var getWeatherAPI = function (cityInfo) {
             console.log(response);
             response.json().then(function (data) {
               console.log(data);
+
               //show the recent city name has been serached
               var nameOfCity = document.createElement("h3");
               nameOfCity.textContent = data.city.name;
               console.log(nameOfCity);
               weatherSummaryEl.appendChild(nameOfCity);
-              //display current Weather info(data, cityInfo);
+
+              //current Weather info
               var currentWeather = data.list[0];
               console.log("humidity:",currentWeather.main.humidity);
               console.log("weather:",currentWeather.weather[0].description);
               console.log("temp:",currentWeather.main.temp);
 
+              // Create list items without bullet points
+              var humidityListItem = document.createElement("li");
+              humidityListItem.textContent = "Humidity: " + currentWeather.main.humidity;
+              var weatherListItem = document.createElement("li");
+              weatherListItem.textContent = "Weather: " + currentWeather.weather[0].description;
+              var tempListItem = document.createElement("li");
+              tempListItem.textContent = "Temperature: " + currentWeather.main.temp;
+
+              // Create unordered list element to hold list items
+              var currentWeatherList = document.createElement("ul");
+              currentWeatherList.classList.add("weather-list");
+
+              // Append list items to unordered list element
+              currentWeatherList.appendChild(humidityListItem);
+              currentWeatherList.appendChild(weatherListItem);
+              currentWeatherList.appendChild(tempListItem);
+
+              // Append unordered list element to weather container element
+              weatherContainerEl.appendChild(currentWeatherList);
+
             });
+
           } else {
             alert('Error: ' + response.statusText);
           }
