@@ -24,6 +24,7 @@ var formSubmitHandler = function (event){
         cityNameEl.value = '';
         weatherSummaryEl.innerHTML = '';
         weatherContainerEl.innerHTML = '';
+        weatherInfoColumnsEl.innerHTML = '';
 
         getWeatherAPI(city);
         
@@ -51,11 +52,14 @@ var getWeatherAPI = function (cityInfo) {
               console.log(nameOfCity);
               weatherSummaryEl.appendChild(nameOfCity);
 
+
               //show the current date
               var todayEl = document.createElement("h3");
               todayEl.textContent = dayjs().format("DD/MM/YYYY");
               console.log(todayEl);
               weatherSummaryEl.append(todayEl);
+
+              
 
               //console.log for current Weather info
               var currentWeather = data.list[0];
@@ -63,13 +67,19 @@ var getWeatherAPI = function (cityInfo) {
               console.log("weather:",currentWeather.weather[0].description);
               console.log("temp:",currentWeather.main.temp);
 
+              // icon for the current weather forcast
+              var currentWeatherIconUrl = "https://openweathermap.org/img/w/" + currentWeather.weather[0].icon + ".png"
+              var currentWeatherIconEl = document.createElement("img");
+                currentWeatherIconEl.setAttribute("src", currentWeatherIconUrl);
+                weatherSummaryEl.append(currentWeatherIconEl);
+
               // Create list items without bullet points
               var humidityListItem = document.createElement("li");
               humidityListItem.textContent = "Humidity: " + currentWeather.main.humidity;
               var weatherListItem = document.createElement("li");
               weatherListItem.textContent = "Weather: " + currentWeather.weather[0].description;
               var tempListItem = document.createElement("li");
-              tempListItem.textContent = "Temperature: " + currentWeather.main.temp;
+              tempListItem.textContent = "Temperature: " + (parseFloat(currentWeather.main.temp -273.15).toFixed(2)) + " °C";
 
               // Create unordered list element to hold list items
               var currentWeatherList = document.createElement("ul");
