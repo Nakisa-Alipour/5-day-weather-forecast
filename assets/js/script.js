@@ -5,6 +5,7 @@ var searchHistoryEl = document.querySelector("#search-history");
 var weatherInfoColumnsEl = document.querySelector("#weather-info-columns");
 var weatherSummaryEl = document.querySelector("#weather-summary");
 var weatherContainerEl = document.querySelector("#weather-container");
+var cityFormHistoryEl = document.querySelector('#city-form-history')
 
 var cityLat;
 var cityLon;
@@ -37,6 +38,13 @@ var formSubmitHandler = function (event){
 }
 
 
+// Define function to handle click event on search history button
+var searchHistoryClickHandler = function(event) {
+  event.preventDefault();
+  var cityName = event.target.textContent;
+  getWeatherAPI(cityName);
+};
+
 var getWeatherAPI = function (cityInfo) {
     // Build URL for weather API
     var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInfo}&appid=${APIKey}`;
@@ -48,6 +56,9 @@ var getWeatherAPI = function (cityInfo) {
             console.log(response);
             response.json().then(function (data) {
               console.log(data);
+
+              //create search history button
+              createSearchHistoryButtons(data.city.name);
 
               //show the recent city name has been serached
               var nameOfCity = document.createElement("h3");
@@ -115,10 +126,6 @@ var getWeatherAPI = function (cityInfo) {
                 console.log(response);
                 response.json().then(function (data) {
                 console.log(data);
-
-                for (var i = 0 ; i < 5 ; i++) {
-
-                }
               })
               }
               });
@@ -133,7 +140,16 @@ var getWeatherAPI = function (cityInfo) {
     });
 };
 
+// Define function to handle click event on search history button
+var createSearchHistoryButtons = function(city) {
+  var buttonEl = document.createElement('button');
+    buttonEl.setAttribute('type', 'submit');
+    buttonEl.setAttribute('class', 'btn btn-info mt-4');
+    buttonEl.textContent = city;
+    buttonEl.addEventListener('click', searchHistoryClickHandler);
+    cityFormHistoryEl.appendChild(buttonEl);
+  
+};
 
 
-
-  cityFormEl.addEventListener("submit",formSubmitHandler);
+cityFormEl.addEventListener("submit",formSubmitHandler);
