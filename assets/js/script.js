@@ -6,11 +6,14 @@ var weatherInfoColumnsEl = document.querySelector("#weather-info-columns");
 var weatherSummaryEl = document.querySelector("#weather-summary");
 var weatherContainerEl = document.querySelector("#weather-container");
 
+var cityLat;
+var cityLon;
+
 
 
 // Define variable to store API key
 var APIKey = "a6bc9930ce925bdcad061b78a447a8df"
-var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={a6bc9930ce925bdcad061b78a447a8df}"
+var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&appid=${APIKey}"
 
 
 // Define function to retrieve and display weather information
@@ -59,20 +62,20 @@ var getWeatherAPI = function (cityInfo) {
               console.log(todayEl);
               weatherSummaryEl.append(todayEl);
 
-              
-
-              //console.log for current Weather info
               var currentWeather = data.list[0];
-              console.log("humidity:",currentWeather.main.humidity);
-              console.log("weather:",currentWeather.weather[0].description);
-              console.log("temp:",currentWeather.main.temp);
 
               // icon for the current weather forcast
               var currentWeatherIconUrl = "https://openweathermap.org/img/w/" + currentWeather.weather[0].icon + ".png"
               var currentWeatherIconEl = document.createElement("img");
-                currentWeatherIconEl.setAttribute("src", currentWeatherIconUrl);
-                weatherSummaryEl.append(currentWeatherIconEl);
+              currentWeatherIconEl.setAttribute("src", currentWeatherIconUrl);
+              weatherSummaryEl.append(currentWeatherIconEl);
 
+              //console.log for current Weather info
+              console.log("humidity:",currentWeather.main.humidity);
+              console.log("weather:",currentWeather.weather[0].description);
+              console.log("temp:",currentWeather.main.temp);
+
+          
               // Create list items without bullet points
               var humidityListItem = document.createElement("li");
               humidityListItem.textContent = "Humidity: " + currentWeather.main.humidity;
@@ -80,6 +83,8 @@ var getWeatherAPI = function (cityInfo) {
               weatherListItem.textContent = "Weather: " + currentWeather.weather[0].description;
               var tempListItem = document.createElement("li");
               tempListItem.textContent = "Temperature: " + (parseFloat(currentWeather.main.temp -273.15).toFixed(2)) + " °C";
+              var windSpeedItem = document.createElement("li");
+              windSpeedItem.textContent = "Wind Speed: " + currentWeather.wind.speed;
 
               // Create unordered list element to hold list items
               var currentWeatherList = document.createElement("ul");
@@ -89,10 +94,34 @@ var getWeatherAPI = function (cityInfo) {
               currentWeatherList.appendChild(humidityListItem);
               currentWeatherList.appendChild(weatherListItem);
               currentWeatherList.appendChild(tempListItem);
+              currentWeatherList.appendChild(windSpeedItem);
 
               // Append unordered list element to weather container element
               weatherContainerEl.appendChild(currentWeatherList);
 
+
+              //get lat and lon for the city to be used for five Day Weather Forcast
+              cityLat = data.city.coord.lat
+              cityLon = data.city.coord.lon
+              
+              console.log(cityLat);
+              console.log(cityLon);
+
+              //fetch the 5 day weather forcast url
+
+              fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + cityLat + "&lon=" + cityLon + "&appid=" + APIKey)
+              .then(function (response) {
+              if (response.ok) {
+                console.log(response);
+                response.json().then(function (data) {
+                console.log(data);
+
+                for (var i = 0 ; i < 5 ; i++) {
+
+                }
+              })
+              }
+              });
             });
 
           } else {
@@ -102,23 +131,7 @@ var getWeatherAPI = function (cityInfo) {
     .catch(function (error) {
         alert('Unable to connect to OpenWeatherAPI');
     });
-
-    var displaySummary = function() {
-
-    //show the current date
-    var todayEl = document.createElement("h3");
-    todayEl.textContent = dayjs().format("DD/MM/YYYY");
-    console.log(todayEl);
-    weatherContainerEl.append(todayEl);
-
-    
-
-}
 };
-
-
-
-
 
 
 
