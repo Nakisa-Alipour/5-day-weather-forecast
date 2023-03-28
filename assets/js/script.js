@@ -5,7 +5,8 @@ var searchHistoryEl = document.querySelector("#search-history");
 var weatherInfoColumnsEl = document.querySelector("#weather-info-columns");
 var weatherSummaryEl = document.querySelector("#weather-summary");
 var weatherContainerEl = document.querySelector("#weather-container");
-var cityFormHistoryEl = document.querySelector('#city-form-history')
+var cityFormHistoryEl = document.querySelector('#city-form-history');
+var existingButtons = document.querySelectorAll('button');
 
 var cityLat;
 var cityLon;
@@ -49,6 +50,7 @@ var searchHistoryClickHandler = function(event) {
   weatherInfoColumnsEl.innerHTML = '';
 
   getWeatherAPI(cityName);
+  //return (cityName);
 };
 
 var getWeatherAPI = function (cityInfo) {
@@ -148,6 +150,10 @@ var getWeatherAPI = function (cityInfo) {
 
 // Define function to handle click event on search history button
 var createSearchHistoryButtons = function(city) {
+  //if (buttonEl.getAttribute cityName === city) {
+    // City already exists in search history, do not create a new button
+   //return;
+  //}
   var buttonEl = document.createElement('button');
     buttonEl.setAttribute('type', 'submit');
     buttonEl.setAttribute('class', 'btn btn-info mt-4');
