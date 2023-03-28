@@ -42,6 +42,12 @@ var formSubmitHandler = function (event){
 var searchHistoryClickHandler = function(event) {
   event.preventDefault();
   var cityName = event.target.textContent;
+
+  cityNameEl.value = '';
+  weatherSummaryEl.innerHTML = '';
+  weatherContainerEl.innerHTML = '';
+  weatherInfoColumnsEl.innerHTML = '';
+
   getWeatherAPI(cityName);
 };
 
