@@ -33,3 +33,13 @@
     border-width: medium;
     box-shadow: 5px #9d9de6;
 }
+
+.weather-forecast-container {
+    background-color: var(--tertiary);
+
+}
+
+.card-section {
+    border: 10px;
+}
+

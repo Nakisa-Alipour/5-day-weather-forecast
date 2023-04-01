@@ -69,7 +69,7 @@ var searchHistoryClickHandler = function(event) {
 
 
   getWeatherAPI(cityName);
-  //return (cityName);
+  
 };
 
 var getWeatherAPI = function (cityInfo) {
@@ -146,8 +146,8 @@ var getWeatherAPI = function (cityInfo) {
               console.log(cityLat);
               console.log(cityLon);
 
-              //fetch the 5 day weather forcast url
 
+              //fetch the 5 day weather forcast url
               fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + cityLat + "&lon=" + cityLon + "&appid=" + APIKey)
               .then(function (response) {
               if (response.ok) {
@@ -156,14 +156,12 @@ var getWeatherAPI = function (cityInfo) {
                 console.log(data);
 
                 for ( i = 1 ; i <6; i++){
-
-                  const card = document.createElement('div');
-                  card.classList = 'card-body';
                   // convert Unix timestamp to specific format
                   var unixFormat = dayjs.unix(data.list[i].dt).format('MMM D, YYYY');
+                  console.log(unixFormat)
                   var convertedDateItem = document.createElement("h5");
                   convertedDateItem.textContent = "Date: " + unixFormat;
-                  weatherInfoColumnsEl.appendChild(convertedDateItem);
+                  
                   
 
 
@@ -171,7 +169,7 @@ var getWeatherAPI = function (cityInfo) {
                   var weatherForcasteIconUrl = "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
                   var weatherForcasteIconEl = document.createElement("img");
                   weatherForcasteIconEl.setAttribute("src", weatherForcasteIconUrl);
-                  weatherInfoColumnsEl.appendChild(weatherForcasteIconEl);
+                  
                   
                   // Create list items with bullet points
                   var humidityForecastItem = document.createElement("li");
@@ -186,16 +184,20 @@ var getWeatherAPI = function (cityInfo) {
 
                   // Create unordered list element to hold list items
                   var weatherForcasteList = document.createElement("ul");
-                  weatherInfoColumnsEl.classList.add("weather-list");
+                  //weatherInfoColumnsEl.classList.add("weather-list");
 
                   // Append list items to unordered list element
                   weatherForcasteList.appendChild(humidityForecastItem);
                   weatherForcasteList.appendChild(weatherForecastItem);
                   weatherForcasteList.appendChild(tempForecastItem);
                   weatherForcasteList.appendChild(windSpeedForecastItem);
+                  weatherInfoColumnsEl.appendChild(convertedDateItem);
+                  weatherInfoColumnsEl.appendChild(weatherForcasteIconEl);
 
                   // Append unordered list element to weather container element
+                  //weatherForcasteList.append(weatherInfoColumnsEl);
                   weatherInfoColumnsEl.appendChild(weatherForcasteList);
+
 
                 }
 
