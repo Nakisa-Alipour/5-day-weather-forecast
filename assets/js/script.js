@@ -7,6 +7,7 @@ var weatherSummaryEl = document.querySelector("#weather-summary");
 var weatherContainerEl = document.querySelector("#weather-container");
 var cityFormHistoryEl = document.querySelector('#city-form-history');
 var existingButtons = document.querySelectorAll('button');
+var weatherForecast = document.querySelector("#weather-forecast");
 
 var cityLat;
 var cityLon;
@@ -114,7 +115,7 @@ var getWeatherAPI = function (cityInfo) {
               console.log("temp:",currentWeather.main.temp);
 
           
-              // Create list items without bullet points
+              // Create list items with bullet points
               var humidityListItem = document.createElement("li");
               humidityListItem.textContent = "Humidity: " + currentWeather.main.humidity;
               var weatherListItem = document.createElement("li");
@@ -154,9 +155,50 @@ var getWeatherAPI = function (cityInfo) {
                 response.json().then(function (data) {
                 console.log(data);
 
-              
+                for ( i = 1 ; i <6; i++){
 
-                
+                  const card = document.createElement('div');
+                  card.classList = 'card-body';
+                  // convert Unix timestamp to specific format
+                  var unixFormat = dayjs.unix(data.list[i].dt).format('MMM D, YYYY');
+                  var convertedDateItem = document.createElement("h5");
+                  convertedDateItem.textContent = "Date: " + unixFormat;
+                  weatherInfoColumnsEl.appendChild(convertedDateItem);
+                  
+
+
+                  // weather icon
+                  var weatherForcasteIconUrl = "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
+                  var weatherForcasteIconEl = document.createElement("img");
+                  weatherForcasteIconEl.setAttribute("src", weatherForcasteIconUrl);
+                  weatherInfoColumnsEl.appendChild(weatherForcasteIconEl);
+                  
+                  // Create list items with bullet points
+                  var humidityForecastItem = document.createElement("li");
+                  humidityForecastItem.textContent = "Humidity: " + data.list[i].main.humidity;
+                  var weatherForecastItem = document.createElement("li");
+                  weatherForecastItem.textContent = "Weather: " + data.list[i].weather[0].description;
+                  var tempForecastItem = document.createElement("li");
+                  tempForecastItem.textContent = "Temperature: " + (parseFloat(data.list[i].main.temp -273.15).toFixed(2)) + " °C";
+                  var windSpeedForecastItem = document.createElement("li");
+                  windSpeedForecastItem.textContent = "Wind Speed: " + data.list[i].wind.speed;
+
+
+                  // Create unordered list element to hold list items
+                  var weatherForcasteList = document.createElement("ul");
+                  weatherInfoColumnsEl.classList.add("weather-list");
+
+                  // Append list items to unordered list element
+                  weatherForcasteList.appendChild(humidityForecastItem);
+                  weatherForcasteList.appendChild(weatherForecastItem);
+                  weatherForcasteList.appendChild(tempForecastItem);
+                  weatherForcasteList.appendChild(windSpeedForecastItem);
+
+                  // Append unordered list element to weather container element
+                  weatherInfoColumnsEl.appendChild(weatherForcasteList);
+
+                }
+
                 
               })
               }
