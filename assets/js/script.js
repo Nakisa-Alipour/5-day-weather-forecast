@@ -155,7 +155,7 @@ var getWeatherAPI = function (cityInfo) {
                 response.json().then(function (data) {
                 console.log(data);
 
-                for ( i = 1 ; i <6; i++){
+                for ( i = 0 ; i <40; i+=8){
                   // convert Unix timestamp to specific format
                   var unixFormat = dayjs.unix(data.list[i].dt).format('MMM D, YYYY');
                   console.log(unixFormat)

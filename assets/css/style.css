@@ -36,6 +36,7 @@
 
 .weather-forecast-container {
     background-color: var(--tertiary);
+    margin: 40px; 
 
 }
 
