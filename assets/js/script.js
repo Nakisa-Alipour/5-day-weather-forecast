@@ -10,6 +10,8 @@ var existingButtons = document.querySelectorAll('button');
 
 var cityLat;
 var cityLon;
+var cityArray = [];
+var uniqueArray;
 
 
 
@@ -30,6 +32,21 @@ var formSubmitHandler = function (event){
         weatherSummaryEl.innerHTML = '';
         weatherContainerEl.innerHTML = '';
         weatherInfoColumnsEl.innerHTML = '';
+        cityFormHistoryEl.innerHTML = '';
+
+        // make an array of searched city
+        cityArray.push(city);
+        console.log(cityArray);
+
+        //ensure the city name is not repeating in the array
+        uniqueArray = [...new Set(cityArray)];
+        console.log(uniqueArray);
+
+        //make button for cities listed in the array
+        for ( i = 0; i < uniqueArray.length; i++) {
+          
+          createSearchHistoryButtons(uniqueArray[i]);
+        }
 
         getWeatherAPI(city);
         
@@ -49,6 +66,7 @@ var searchHistoryClickHandler = function(event) {
   weatherContainerEl.innerHTML = '';
   weatherInfoColumnsEl.innerHTML = '';
 
+
   getWeatherAPI(cityName);
   //return (cityName);
 };
@@ -57,6 +75,8 @@ var getWeatherAPI = function (cityInfo) {
     // Build URL for weather API
     var queryURL = `https://api.openweathermap.org/data/2.5/forecast?q=${cityInfo}&appid=${APIKey}`;
 
+   
+
     // Send GET request to weather API
     fetch(queryURL)
     .then(function (response) {
@@ -64,9 +84,8 @@ var getWeatherAPI = function (cityInfo) {
             console.log(response);
             response.json().then(function (data) {
               console.log(data);
-
-              //create search history button
-              createSearchHistoryButtons(data.city.name);
+      
+              
 
               //show the recent city name has been serached
               var nameOfCity = document.createElement("h3");
@@ -134,6 +153,11 @@ var getWeatherAPI = function (cityInfo) {
                 console.log(response);
                 response.json().then(function (data) {
                 console.log(data);
+
+              
+
+                
+                
               })
               }
               });
@@ -150,16 +174,13 @@ var getWeatherAPI = function (cityInfo) {
 
 // Define function to handle click event on search history button
 var createSearchHistoryButtons = function(city) {
-  //if (buttonEl.getAttribute cityName === city) {
-    // City already exists in search history, do not create a new button
-   //return;
-  //}
   var buttonEl = document.createElement('button');
     buttonEl.setAttribute('type', 'submit');
     buttonEl.setAttribute('class', 'btn btn-info mt-4');
     buttonEl.textContent = city;
     buttonEl.addEventListener('click', searchHistoryClickHandler);
     cityFormHistoryEl.appendChild(buttonEl);
+    
   
 };
 
