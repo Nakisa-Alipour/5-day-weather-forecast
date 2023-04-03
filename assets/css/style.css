@@ -1,12 +1,17 @@
 :root {
     --primary: rgb(15, 15, 94);
-    --secondary: rgb(53, 53, 135);
+    --secondary: rgb(65, 65, 167);
     --tertiary: #9d9de6;
     --primary-text: white;
     --secondary-text: rgb(89, 151, 231); 
     --border-radius: .3rem;
   }
 
+.card-header {
+    background-color: var(--secondary);
+    color: var(--secondary-text);
+    text-align: center;
+}
 
 .title {
     background-color: var(--primary);
@@ -35,12 +40,18 @@
 }
 
 .weather-forecast-container {
-    background-color: var(--tertiary);
-    margin: 40px; 
+    
+   
 
 }
 
 .card-section {
     border: 10px;
 }
+
+.card {
+    margin: 20px;
+    
+}
+
 

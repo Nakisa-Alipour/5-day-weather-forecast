@@ -15,11 +15,9 @@ var cityArray = [];
 var uniqueArray;
 
 
-
 // Define variable to store API key
 var APIKey = "a6bc9930ce925bdcad061b78a447a8df"
 var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lon=${cityLon}&appid=${APIKey}"
-
 
 // Define function to retrieve and display weather information
 var formSubmitHandler = function (event){
@@ -58,7 +56,6 @@ var formSubmitHandler = function (event){
     }
 }
 
-
 // Define function to handle click event on search history button
 var searchHistoryClickHandler = function(event) {
   event.preventDefault();
@@ -68,7 +65,6 @@ var searchHistoryClickHandler = function(event) {
   weatherSummaryEl.innerHTML = '';
   weatherContainerEl.innerHTML = '';
   weatherInfoColumnsEl.innerHTML = '';
-
 
   getWeatherAPI(cityName);
   
@@ -95,7 +91,6 @@ var getWeatherAPI = function (cityInfo) {
               nameOfCity.textContent = data.city.name;
               console.log(nameOfCity);
               weatherSummaryEl.appendChild(nameOfCity);
-
 
               //show the current date
               var todayEl = document.createElement("h3");
@@ -140,14 +135,12 @@ var getWeatherAPI = function (cityInfo) {
               // Append unordered list element to weather container element
               weatherContainerEl.appendChild(currentWeatherList);
 
-
               //get lat and lon for the city to be used for five Day Weather Forcast
               cityLat = data.city.coord.lat
               cityLon = data.city.coord.lon
               
               console.log(cityLat);
               console.log(cityLon);
-
 
               //fetch the 5 day weather forcast url
               fetch("https://api.openweathermap.org/data/2.5/forecast?lat=" + cityLat + "&lon=" + cityLon + "&appid=" + APIKey)
@@ -159,12 +152,16 @@ var getWeatherAPI = function (cityInfo) {
 
                 for ( i = 0 ; i <40; i+=8){
                   // convert Unix timestamp to specific format
+                  var cardSection = document.createElement("div");
+                  cardSection.classList = "card";
+                  cardSection.style.boxShadow = "10px 20px 30px gray";
+                  var cardHeader =  document.createElement("div");
+                  cardHeader.classList = "card-header"
                   var unixFormat = dayjs.unix(data.list[i].dt).format('MMM D, YYYY');
                   var convertedDateItem = document.createElement("h5");
                   convertedDateItem.textContent = "Date: " + unixFormat;
                   
                   
-
 
                   // weather icon
                   var weatherForcasteIconUrl = "https://openweathermap.org/img/w/" + data.list[i].weather[0].icon + ".png"
@@ -182,23 +179,24 @@ var getWeatherAPI = function (cityInfo) {
                   var windSpeedForecastItem = document.createElement("li");
                   windSpeedForecastItem.textContent = "Wind Speed: " + data.list[i].wind.speed;
 
-
                   // Create unordered list element to hold list items
                   var weatherForcasteList = document.createElement("ul");
                   //weatherInfoColumnsEl.classList.add("weather-list");
 
                   // Append list items to unordered list element
+                  cardHeader.appendChild(convertedDateItem);
+                  cardHeader.appendChild(weatherForcasteIconEl);
+                  cardSection.appendChild(cardHeader);
                   weatherForcasteList.appendChild(humidityForecastItem);
                   weatherForcasteList.appendChild(weatherForecastItem);
                   weatherForcasteList.appendChild(tempForecastItem);
                   weatherForcasteList.appendChild(windSpeedForecastItem);
-                  weatherInfoColumnsEl.appendChild(convertedDateItem);
-                  weatherInfoColumnsEl.appendChild(weatherForcasteIconEl);
+                  cardSection.appendChild(weatherForcasteList);
+                  
 
                   // Append unordered list element to weather container element
                   //weatherForcasteList.append(weatherInfoColumnsEl);
-                  weatherInfoColumnsEl.appendChild(weatherForcasteList);
-
+                  weatherInfoColumnsEl.appendChild(cardSection);
 
                 }
 
@@ -228,6 +226,5 @@ var createSearchHistoryButtons = function(city) {
     
   
 };
-
 
 cityFormEl.addEventListener("submit",formSubmitHandler);
