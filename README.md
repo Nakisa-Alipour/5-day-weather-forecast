@@ -22,9 +22,12 @@ The Weather Forecast app must meet the following acceptance criteria:
 ## Installation
 To run the Weather Forecast on your local machine, follow these steps:
 
-- Clone the repository to your local machine using git clone <repository-url>
+- Clone the repository to your local machine using git clone
 - Open the index.html file in your browser
 - Enjoy using the Weather Forecast app!
+
+## Link for the application
+https://nakisa-alipour.github.io/5-day-weather-forecast/
 
 ## Usage
 To use the Weather Forecast, simply enter the name of the city you wish to view weather information for in the search bar and click the search button. The dashboard will display current and future weather conditions for the selected city, as well as add it to the search history. You can click on any city in the search history to view weather information for that city again.
