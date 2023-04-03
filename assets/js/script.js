@@ -42,11 +42,13 @@ var formSubmitHandler = function (event){
         //ensure the city name is not repeating in the array
         uniqueArray = [...new Set(cityArray)];
         console.log(uniqueArray);
+        localStorage.setItem('searched-cities', JSON.stringify(uniqueArray));
 
         //make button for cities listed in the array
         for ( i = 0; i < uniqueArray.length; i++) {
-          
-          createSearchHistoryButtons(uniqueArray[i]);
+          var getArray = JSON.parse(localStorage.getItem('searched-cities') || '[]');
+          console.log(getArray)
+          createSearchHistoryButtons(getArray[i]);
         }
 
         getWeatherAPI(city);
@@ -158,7 +160,6 @@ var getWeatherAPI = function (cityInfo) {
                 for ( i = 0 ; i <40; i+=8){
                   // convert Unix timestamp to specific format
                   var unixFormat = dayjs.unix(data.list[i].dt).format('MMM D, YYYY');
-                  console.log(unixFormat)
                   var convertedDateItem = document.createElement("h5");
                   convertedDateItem.textContent = "Date: " + unixFormat;
                   
