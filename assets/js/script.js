@@ -22,7 +22,8 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?lat=${cityLat}&lo
 // Define function to retrieve and display weather information
 var formSubmitHandler = function (event){
     event.preventDefault();
-    var city = cityNameEl.value.trim();
+    var city1 = cityNameEl.value.trim();
+    var city = city1.toLowerCase();
 
     if (city) {
        
