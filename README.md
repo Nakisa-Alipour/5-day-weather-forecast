@@ -8,6 +8,10 @@ The Weather Dashboard utilizes the OpenWeatherMap API to retrieve weather data f
 ## User Story
 As a traveler, I want to see the weather outlook for multiple cities so that I can plan a trip accordingly.
 
+
+![WD 1](https://user-images.githubusercontent.com/124220654/229419695-d894054f-bcc5-4b36-bf76-25704f0a37e0.jpg)
+
+
 ## Acceptance Criteria
 The Weather Forecast app must meet the following acceptance criteria:
 
@@ -17,6 +21,11 @@ The Weather Forecast app must meet the following acceptance criteria:
 - When viewing current weather conditions for a city, the user should be presented with the city name, the date, an icon representation of weather conditions, the temperature, the humidity, and the wind speed.
 - When viewing future weather conditions for a city, the user should be presented with a 5-day forecast that displays the date, an icon representation of weather conditions, the temperature, the wind speed, and the humidity.
 - When a user clicks on a city in the search history, they should be presented with current and future conditions for that city.
+
+
+
+https://user-images.githubusercontent.com/124220654/229420672-ba7ae228-d237-4ab8-a0be-c3fcf618add8.mp4
+
 
 
 ## Installation
