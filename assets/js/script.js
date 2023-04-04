@@ -11,7 +11,7 @@ var weatherForecast = document.querySelector("#weather-forecast");
 
 var cityLat;
 var cityLon;
-var cityArray = [];
+var cityArray = JSON.parse(localStorage.getItem('searched-cities')) || [];
 var uniqueArray;
 
 
@@ -229,3 +229,7 @@ var createSearchHistoryButtons = function(city) {
 };
 
 cityFormEl.addEventListener("submit",formSubmitHandler);
+
+for ( i = 0; i < cityArray.length; i++) {
+  createSearchHistoryButtons(cityArray[i]);
+}
